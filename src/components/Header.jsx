@@ -5,9 +5,11 @@ const Header = () => {
   return (
     <header className="bg-white shadow-md py-4 px-6 flex items-center justify-between">
       {/* Logo */}
-      <div className="text-2xl font-bold text-indigo-600">
-        BookWise <span className="text-gray-800">AI</span>
-      </div>
+      <Link to='/'>
+        <div className="text-2xl font-bold text-indigo-600">
+          BookWise <span className="text-gray-800">AI</span>
+        </div>
+      </Link>
 
       {/* Navigation */}
       <nav className="hidden md:flex space-x-6 text-gray-700 font-medium">
