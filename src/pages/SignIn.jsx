@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const navigate = useNavigate();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -22,6 +24,7 @@ function SignIn() {
       console.log("User signed in:", user);
       setEmail("");
       setPassword("");
+      navigate("/my-books");
       // Optional: Redirect user or clear form
     } catch (error) {
       setErrorMsg(error.message);
@@ -59,7 +62,7 @@ function SignIn() {
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-2 rounded-xl hover:bg-indigo-700 transition"
+            className="w-full bg-indigo-600 text-white py-2 rounded-xl hover:bg-indigo-700 transition cursor-pointer"
           >
             Sign In
           </button>
