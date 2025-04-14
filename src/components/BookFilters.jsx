@@ -9,6 +9,7 @@ const BookFilters = ({
   onAuthorChange,
   onGenreChange,
   onRatingChange,
+  resetFilters,
 }) => {
   return (
     <div className="flex flex-col sm:flex-row gap-4 items-center justify-center p-4 bg-white rounded-xl shadow-md mb-6 w-full max-w-4xl mx-auto">
@@ -53,6 +54,12 @@ const BookFilters = ({
           </option>
         ))}
       </select>
+      <button
+        onClick={resetFilters}
+        className="px-4 py-2 bg-yellow-400 text-white rounded-lg hover:bg-yellow-500 transition text-sm font-medium w-full sm:w-auto"
+      >
+        Reset Filters
+      </button>
     </div>
   );
 };

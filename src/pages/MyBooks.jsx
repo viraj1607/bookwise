@@ -58,6 +58,13 @@ function MyBooks() {
       console.error("Failed to fetch books", error);
     }
   };
+
+  const handleResetFilters = () => {
+    setSelectedAuthor("");
+    setSelectedGenre("");
+    setSelectedRating("");
+  };
+
   const filteredBooks = bookList.filter((book) => {
     return (
       (!author || book.author === author) &&
@@ -92,6 +99,7 @@ function MyBooks() {
         onAuthorChange={setAuthor}
         onGenreChange={setGenre}
         onRatingChange={setRating}
+        resetFilters={handleResetFilters}
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredBooks.map((book, index) => (
