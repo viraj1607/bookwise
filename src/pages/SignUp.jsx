@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
+import axiosInstance from "../utils/axios";
 
 function SignUp() {
   const [fullName, setFullName] = useState("");
@@ -24,7 +25,8 @@ function SignUp() {
       await updateProfile(user, {
         displayName: fullName,
       });
-
+      const uid = userCredential.user.uid;
+      await axiosInstance.post("/user/register", { uid });
       console.log("User signed up successfully:", user);
       setFullName("");
       setEmail("");
