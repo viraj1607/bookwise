@@ -21,6 +21,8 @@ function SignIn() {
         password
       );
       const user = userCredential.user;
+      const uid = userCredential.user.uid;
+      localStorage.setItem("uid", uid);
       console.log("User signed in:", user);
       setEmail("");
       setPassword("");

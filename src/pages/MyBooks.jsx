@@ -4,6 +4,7 @@ import AddBook from "../components/AddBook";
 import geminiAI from "../../services/GeminiAPI";
 import BookFilters from "../components/BookFilters";
 import booksData from "../data/dummy";
+import axiosInstance from "../utils/axios";
 
 function MyBooks() {
   const [author, setAuthor] = useState("");
@@ -26,7 +27,24 @@ function MyBooks() {
     const cleanJSON = AIresponse.replace(/```json|```/g, "").trim();
     const parsedJSON = JSON.parse(cleanJSON);
     console.log("AIresponse", parsedJSON);
-    setBookList((prev) => [...prev, parsedJSON]);
+    
+    addBooktoList(localStorage.getItem("uid"), parsedJSON);
+  };
+
+  const addBooktoList = async (uid, newBook) => {
+    console.log(newBook);
+    try {
+      const response = await axiosInstance.post("/user/add-book", {
+        uid,
+        newBook
+      });
+      console.log(response.data);
+      setBookList(response.data.bookList);
+      // return response.data;
+    } catch (error) {
+      console.error("Failed to add book:", error);
+      throw error;
+    }
   };
 
   const filteredBooks = bookList.filter((book) => {
@@ -49,7 +67,7 @@ function MyBooks() {
   }, []);
 
   return (
-    <div className="py-8 bg-gradient-to-br from-indigo-50 to-yellow-50">
+    <div className="py-8 bg-gradient-to-br from-indigo-50 to-yellow-50 min-h-screen">
       <h1 className="text-center text-2xl font-bold text-indigo-600 mb-4">
         My Books
       </h1>
