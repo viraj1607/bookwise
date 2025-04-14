@@ -6,6 +6,7 @@ import MyBooks from "./pages/MyBooks";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import PrivateRoute from "./components/PrivateRoute";
+import Recommendations from "./pages/Recommendations";
 
 function App() {
   return (
@@ -23,7 +24,14 @@ function App() {
             </PrivateRoute>
           }
         />
-        {/* <Route path="/recommendation" element={<Recommendation />} /> */}
+        <Route
+          path="/recommendation"
+          element={
+            <PrivateRoute>
+              <Recommendations />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </>
   );

@@ -46,7 +46,7 @@ const Header = () => {
               to="/recommendation"
               className="hover:text-indigo-600 transition"
             >
-              Recommendation
+              Recommendations
             </Link>
             <button
               onClick={handleLogout}
