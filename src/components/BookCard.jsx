@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import StarRatings from "react-star-ratings";
 
 const BookCard = ({ title, author, genre, summary, dateAdded, rating }) => {
-  useEffect(() => {
-    console.log("rating", rating);
-  }, []);
+  // useEffect(() => {
+  //   console.log("rating", rating);
+  // }, []);
   return (
     <div className="bg-white rounded-2xl shadow-md p-5 w-full max-w-md mx-auto">
       <h2 className="text-xl font-semibold text-indigo-600">{title}</h2>
@@ -17,14 +17,17 @@ const BookCard = ({ title, author, genre, summary, dateAdded, rating }) => {
       <div className="flex items-center gap-2 mb-3">
         <span className="text-sm font-medium text-gray-700">Rating:</span>
         {rating && (
-          <StarRatings
-            rating={rating}
-            starRatedColor="#facc15"
-            numberOfStars={5}
-            starDimension="20px"
-            starSpacing="2px"
-            name="book-rating"
-          />
+          <div >
+            <StarRatings
+              rating={rating}
+              starRatedColor="#facc15"
+              numberOfStars={5}
+              starDimension="20px"
+              starSpacing="2px"
+              name="book-rating"
+            />
+            <span>({rating})</span>
+          </div>
         )}
       </div>
 

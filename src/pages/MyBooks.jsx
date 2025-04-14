@@ -26,19 +26,19 @@ function MyBooks() {
     const AIresponse = await geminiAI(prompt);
     const cleanJSON = AIresponse.replace(/```json|```/g, "").trim();
     const parsedJSON = JSON.parse(cleanJSON);
-    console.log("AIresponse", parsedJSON);
-    
+    // console.log("AIresponse", parsedJSON);
+
     addBooktoList(localStorage.getItem("uid"), parsedJSON);
   };
 
   const addBooktoList = async (uid, newBook) => {
-    console.log(newBook);
+    // console.log(newBook);
     try {
       const response = await axiosInstance.post("/user/add-book", {
         uid,
-        newBook
+        newBook,
       });
-      console.log(response.data);
+      // console.log(response.data);
       setBookList(response.data.bookList);
       // return response.data;
     } catch (error) {
@@ -47,6 +47,17 @@ function MyBooks() {
     }
   };
 
+  const getAllBooks = async () => {
+    const uid = localStorage.getItem("uid");
+
+    try {
+      const res = await axiosInstance.get(`/user/${uid}`);
+      // console.log("Books:", res.data);
+      setBookList(res.data);
+    } catch (error) {
+      console.error("Failed to fetch books", error);
+    }
+  };
   const filteredBooks = bookList.filter((book) => {
     return (
       (!author || book.author === author) &&
@@ -63,7 +74,7 @@ function MyBooks() {
   ];
 
   useEffect(() => {
-    setBookList(booksData);
+    getAllBooks();
   }, []);
 
   return (
@@ -82,14 +93,6 @@ function MyBooks() {
         onGenreChange={setGenre}
         onRatingChange={setRating}
       />
-      {/* <BookCard
-        title="Atomic Habits"
-        author="James Clear"
-        genre="Self-help"
-        summary="A guide to building good habits and breaking bad ones through small changes."
-        dateAdded="April 12, 2025"
-        rating={4.5}
-      /> */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredBooks.map((book, index) => (
           <BookCard key={index} {...book} />
