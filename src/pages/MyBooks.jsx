@@ -60,9 +60,9 @@ function MyBooks() {
   };
 
   const handleResetFilters = () => {
-    setSelectedAuthor("");
-    setSelectedGenre("");
-    setSelectedRating("");
+    setAuthor("");
+    setGenre("");
+    setRating("");
   };
 
   const filteredBooks = bookList.filter((book) => {

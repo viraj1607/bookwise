@@ -8,6 +8,7 @@ import SignIn from "./pages/SignIn";
 import PrivateRoute from "./components/PrivateRoute";
 import Recommendations from "./pages/Recommendations";
 import UserInfo from "./pages/UserInfo";
+import Community from "./pages/Community";
 
 function App() {
   return (
@@ -38,6 +39,14 @@ function App() {
           element={
             <PrivateRoute>
               <UserInfo />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/community"
+          element={
+            <PrivateRoute>
+              <Community />
             </PrivateRoute>
           }
         />

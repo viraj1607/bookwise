@@ -46,6 +46,9 @@ const Header = () => {
       <nav className="hidden md:flex space-x-6 text-gray-700 font-medium">
         {user && (
           <>
+            <Link to="/community" className="hover:text-indigo-600 transition">
+              Community
+            </Link>
             <Link to="/my-books" className="hover:text-indigo-600 transition">
               My Books
             </Link>
@@ -55,6 +58,7 @@ const Header = () => {
             >
               Recommendations
             </Link>
+
             <button
               onClick={handleLogout}
               className="hover:text-indigo-600 transition cursor-pointer"
