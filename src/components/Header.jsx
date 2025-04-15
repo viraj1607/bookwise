@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { User2 } from "lucide-react";
 
 const Header = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const auth = getAuth();
+  const currentUser = auth.currentUser;
+
+  const handleUserClick = () => {
+    navigate("/user-info");
+  };
 
   useEffect(() => {
     const auth = getAuth();
@@ -20,7 +27,7 @@ const Header = () => {
     try {
       await signOut(auth);
       console.log("User signed out successfully");
-      navigate("/")
+      navigate("/");
     } catch (error) {
       console.error("Error signing out:", error);
     }
@@ -55,6 +62,15 @@ const Header = () => {
               Sign Out
             </button>
           </>
+        )}
+        {currentUser && (
+          <button
+            onClick={handleUserClick}
+            className="text-indigo-600 hover:text-indigo-800 transition"
+            title="User Info"
+          >
+            <User2 className="w-6 h-6" />
+          </button>
         )}
       </nav>
 

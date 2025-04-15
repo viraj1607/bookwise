@@ -7,6 +7,7 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import PrivateRoute from "./components/PrivateRoute";
 import Recommendations from "./pages/Recommendations";
+import UserInfo from "./pages/UserInfo";
 
 function App() {
   return (
@@ -29,6 +30,14 @@ function App() {
           element={
             <PrivateRoute>
               <Recommendations />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/user-info"
+          element={
+            <PrivateRoute>
+              <UserInfo />
             </PrivateRoute>
           }
         />
