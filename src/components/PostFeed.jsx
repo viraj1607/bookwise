@@ -37,7 +37,7 @@ const PostFeed = ({ post }) => {
       </div>
 
       {/* Post Content */}
-      <p className="text-gray-800 text-base leading-relaxed mb-4">{post.text}</p>
+      <p className="text-gray-800 text-base leading-relaxed mb-4">{post.content}</p>
 
       {/* Actions */}
       <div className="flex items-center gap-6 text-gray-600">

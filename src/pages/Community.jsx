@@ -4,6 +4,7 @@ import { getAuth } from "firebase/auth";
 import AddPost from "../components/AddPost";
 import PostFeed from "../components/PostFeed";
 import { dummyCommunityPosts } from "../data/feed";
+import axiosInstance from "../utils/axios";
 
 const Community = () => {
   const [posts, setPosts] = useState(dummyCommunityPosts);
@@ -11,28 +12,37 @@ const Community = () => {
   const user = auth.currentUser;
 
   useEffect(() => {
-    // const fetchPosts = async () => {
-    //   const res = await axios.get("/community/posts");
-    //   setPosts(res.data);
-    // };
-    // fetchPosts();
+    fetchPosts();
   }, []);
 
+  const fetchPosts = async () => {
+    const res = await axiosInstance.get("/community/posts");
+      setPosts(res.data);
+    console.log("posts", res.data);
+  };
+
   const handleNewPost = async (thought) => {
-    // const newPost = {
-    //   text: thought,
-    //   user: user.displayName || user.email,
-    // };
-    // const res = await axios.post("/community/posts", newPost);
-    // setPosts((prev) => [res.data, ...prev]);
+    console.log("user", user);
+    const newPost = {
+      uid: localStorage.getItem("uid"),
+      content: thought,
+      user: user ? user.displayName || user.email : "Book Worm",
+    };
+    const res = await axiosInstance.post("/community/posts", newPost);
+    console.log(res);
+    fetchPosts()
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-yellow-50 py-10 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-extrabold text-indigo-600">📚 Book Community</h1>
-          <p className="text-gray-600 mt-2">Share your thoughts and connect with fellow readers</p>
+          <h1 className="text-4xl font-extrabold text-indigo-600">
+            📚 Book Community
+          </h1>
+          <p className="text-gray-600 mt-2">
+            Share your thoughts and connect with fellow readers
+          </p>
         </div>
 
         <div className="mb-6 bg-white rounded-2xl shadow-xl p-6">
