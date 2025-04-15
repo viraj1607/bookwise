@@ -26,5 +26,29 @@ export const dummyCommunityPosts = [
       comments: [],
       createdAt: "2025-04-10T21:15:00Z",
     },
+    {
+      _id: "4",
+      text: "Re-read *Harry Potter and the Prisoner of Azkaban* after years — still magical! 🪄⚡️ #Nostalgia",
+      user: "emma@example.com",
+      likes: ["uid456", "uid123", "uid999"],
+      comments: [],
+      createdAt: "2025-04-10T21:15:00Z",
+    },
+    {
+      _id: "5",
+      text: "Re-read *Harry Potter and the Prisoner of Azkaban* after years — still magical! 🪄⚡️ #Nostalgia",
+      user: "emma@example.com",
+      likes: ["uid456", "uid123", "uid999"],
+      comments: [],
+      createdAt: "2025-04-10T21:15:00Z",
+    },
+    {
+      _id: "6",
+      text: "Re-read *Harry Potter and the Prisoner of Azkaban* after years — still magical! 🪄⚡️ #Nostalgia",
+      user: "emma@example.com",
+      likes: ["uid456", "uid123", "uid999"],
+      comments: [],
+      createdAt: "2025-04-10T21:15:00Z",
+    },
   ];
   

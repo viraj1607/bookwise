@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
-import { Loader2 } from "lucide-react";
+import { Loader2, Pencil, MapPin, Phone, Mail, UserRound } from "lucide-react";
+import axiosInstance from "../utils/axios";
+import PostFeed from "../components/PostFeed";
+import { dummyCommunityPosts } from "../data/feed";
 
 const UserInfo = () => {
   const [userData, setUserData] = useState({
@@ -9,7 +12,7 @@ const UserInfo = () => {
     location: "",
     phone: "",
   });
-
+  const [userPosts, setUserPosts] = useState(dummyCommunityPosts);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -23,98 +26,93 @@ const UserInfo = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     setLoading(true);
-
-    // Simulated delay
     setTimeout(() => {
       setMessage("Profile updated successfully!");
       setLoading(false);
     }, 1000);
   };
 
+  const fetchUserPosts = async () => {
+    try {
+      const res = await axiosInstance.get(`/user-posts/get-posts/${user.uid}`);
+      setUserPosts(res.data.postList || []);
+    } catch (err) {
+      console.error("Error fetching user posts:", err);
+    }
+  };
+
+  // useEffect(() => {
+  //   if (user) {
+  //     setUserData((prev) => ({ ...prev, email: user.email }));
+  //     fetchUserPosts();
+  //   }
+  // }, [user]);
+
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-gradient-to-br from-yellow-50 to-indigo-100">
-      <div className="bg-white p-10 rounded-3xl shadow-2xl w-full max-w-lg">
-        <h2 className="text-3xl font-extrabold mb-8 text-center text-indigo-600">
-          Update Your Profile
-        </h2>
-        <form onSubmit={handleUpdate} className="space-y-5">
-          {/* Full Name */}
-          <div>
-            <label className="text-sm text-gray-600 font-medium">Full Name</label>
-            <input
-              type="text"
-              name="fullName"
-              value={userData.fullName}
-              onChange={handleChange}
-              placeholder="Enter your full name"
-              className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-              required
-            />
-          </div>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-yellow-50 py-12 px-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
+        {/* Left - User Info Form */}
+        <div className="bg-white rounded-3xl p-8 shadow-lg col-span-1">
+          <h2 className="text-2xl font-bold text-indigo-600 mb-6 flex items-center gap-2">
+            <UserRound className="w-6 h-6" /> Your Profile
+          </h2>
+          <form onSubmit={handleUpdate} className="space-y-5">
+            {[
+              { label: "Full Name", name: "fullName", icon: <Pencil /> },
+              { label: "Email", name: "email", icon: <Mail /> },
+              { label: "Location", name: "location", icon: <MapPin /> },
+              { label: "Phone", name: "phone", icon: <Phone /> },
+            ].map(({ label, name, icon }) => (
+              <div key={name}>
+                <label className="block text-sm font-medium text-gray-600 mb-1">{label}</label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">{icon}</span>
+                  <input
+                    type={name === "email" ? "email" : "text"}
+                    name={name}
+                    value={userData[name]}
+                    onChange={handleChange}
+                    className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-indigo-500 outline-none"
+                    placeholder={`Enter your ${label.toLowerCase()}`}
+                  />
+                </div>
+              </div>
+            ))}
 
-          {/* Email */}
-          <div>
-            <label className="text-sm text-gray-600 font-medium">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={userData.email}
-              onChange={handleChange}
-              placeholder="Enter your email"
-              className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-              required
-            />
-          </div>
+            <button
+              type="submit"
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-xl flex items-center justify-center transition duration-200"
+              disabled={loading}
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="animate-spin w-4 h-4 mr-2" />
+                  Updating...
+                </>
+              ) : (
+                "Update Info"
+              )}
+            </button>
 
-          {/* Location */}
-          <div>
-            <label className="text-sm text-gray-600 font-medium">Location</label>
-            <input
-              type="text"
-              name="location"
-              value={userData.location}
-              onChange={handleChange}
-              placeholder="City, State"
-              className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-            />
-          </div>
+            {message && <p className="text-green-600 text-sm text-center">{message}</p>}
+          </form>
+        </div>
 
-          {/* Phone */}
-          <div>
-            <label className="text-sm text-gray-600 font-medium">Phone</label>
-            <input
-              type="text"
-              name="phone"
-              value={userData.phone}
-              onChange={handleChange}
-              placeholder="Your phone number"
-              className="w-full mt-1 px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
-            />
-          </div>
-
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 rounded-xl transition duration-200 flex items-center justify-center"
-            disabled={loading}
-          >
-            {loading ? (
-              <>
-                <Loader2 className="animate-spin w-4 h-4 mr-2" />
-                Updating...
-              </>
-            ) : (
-              "Update Info"
-            )}
-          </button>
-        </form>
-
-        {/* Message */}
-        {message && (
-          <div className="mt-6 text-center text-green-600 font-medium">
-            {message}
-          </div>
-        )}
+        {/* Right - User Posts */}
+        <div className="col-span-2">
+          <h3 className="text-2xl font-bold text-indigo-600 mb-4">📚 Your Posts</h3>
+          {userPosts.length === 0 ? (
+            <div className="text-center text-gray-500 bg-white p-8 rounded-3xl shadow-md">
+              You haven't posted anything yet.
+            </div>
+          ) : (
+            <div className="space-y-4 max-h-[500px] overflow-y-auto">
+              {userPosts.map((post, i) => (
+                <PostFeed key={i} post={post}/>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
