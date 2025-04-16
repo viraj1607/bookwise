@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { FaHeart, FaRegCommentDots, FaUserCircle } from "react-icons/fa";
 import axiosInstance from "../utils/axios";
 
-const PostFeed = ({ post, user }) => {
+const PostFeed = ({ post, user, fetch }) => {
   const [showComments, setShowComments] = useState(false);
   const [commentInput, setCommentInput] = useState("");
   const [comments, setComments] = useState(post.comments || []);
+  const isLiked = post.likes.includes(localStorage.getItem("uid"));
 
   const toggleComments = () => {
     setShowComments((prev) => !prev);
@@ -32,6 +33,23 @@ const PostFeed = ({ post, user }) => {
     }
   };
 
+  const handleLike = async () => {
+    try {
+      const res = await axiosInstance.post(
+        `/community/posts/${post._id}/like`,
+        {
+          uid: localStorage.getItem("uid"),
+        }
+      );
+
+      // setLikes(res.data);
+      console.log("likes", res.data);
+      fetch();
+    } catch (err) {
+      console.error("Failed to like post", err);
+    }
+  };
+
   return (
     <div className="bg-white rounded-2xl shadow-md p-6 mb-6 max-w-2xl w-full mx-auto transition hover:shadow-lg">
       {/* User Info */}
@@ -52,7 +70,12 @@ const PostFeed = ({ post, user }) => {
 
       {/* Actions */}
       <div className="flex items-center gap-6 text-gray-600">
-        <button className="flex items-center gap-2 hover:text-red-500 transition">
+        <button
+          className={`flex items-center gap-2 hover:text-red-500 transition ${
+            isLiked ? "text-red-500" : "text-gray-600"
+          }`}
+          onClick={handleLike}
+        >
           <FaHeart className="text-lg" />
           <span>{post.likes.length}</span>
         </button>

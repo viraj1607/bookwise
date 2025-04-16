@@ -64,7 +64,7 @@ const Community = () => {
 
         <div className="space-y-6">
           {posts.map((post) => (
-            <PostFeed key={post._id} post={post} user={user}/>
+            <PostFeed key={post._id} post={post} user={user} fetch={fetchPosts}/>
           ))}
         </div>
       </div>
