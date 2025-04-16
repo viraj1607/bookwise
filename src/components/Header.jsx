@@ -28,6 +28,7 @@ const Header = () => {
       await signOut(auth);
       console.log("User signed out successfully");
       navigate("/");
+      localStorage.removeItem("uid")
     } catch (error) {
       console.error("Error signing out:", error);
     }

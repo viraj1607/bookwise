@@ -12,7 +12,7 @@ const UserInfo = () => {
     location: "",
     phone: "",
   });
-  const [userPosts, setUserPosts] = useState(dummyCommunityPosts);
+  const [userPosts, setUserPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -34,12 +34,17 @@ const UserInfo = () => {
 
   const fetchUserPosts = async () => {
     try {
-      const res = await axiosInstance.get(`/user-posts/get-posts/${user.uid}`);
-      setUserPosts(res.data.postList || []);
+      const res = await axiosInstance.get(`/user-posts/posts/${localStorage.getItem("uid")}`);
+      console.log(res.data)
+      setUserPosts(res.data);
     } catch (err) {
       console.error("Error fetching user posts:", err);
     }
   };
+
+  useEffect(()=>{
+    fetchUserPosts()
+  },[])
 
   // useEffect(() => {
   //   if (user) {
@@ -101,9 +106,10 @@ const UserInfo = () => {
         {/* Right - User Posts */}
         <div className="col-span-2">
           <h3 className="text-2xl font-bold text-indigo-600 mb-4">📚 Your Posts</h3>
-          {userPosts.length === 0 ? (
+          {userPosts.length===0 ? (
             <div className="text-center text-gray-500 bg-white p-8 rounded-3xl shadow-md">
               You haven't posted anything yet.
+              {console.log("length",userPosts.length)}
             </div>
           ) : (
             <div className="space-y-4 max-h-[500px] overflow-y-auto">
