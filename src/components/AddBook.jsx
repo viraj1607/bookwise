@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function AddBook({onAdd}) {
+function AddBook({ onAdd }) {
   const [bookName, setBookName] = useState("");
 
   const handleAdd = () => {
@@ -14,7 +14,7 @@ function AddBook({onAdd}) {
       <input
         type="text"
         placeholder="Enter book name"
-        className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-600 text-sm"
+        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:bg-gray-800 dark:text-white text-sm"
         value={bookName}
         onChange={(e) => setBookName(e.target.value)}
       />

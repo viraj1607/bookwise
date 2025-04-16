@@ -9,7 +9,7 @@ function Recommendations() {
     { title: "Rich Dad Poor Dad" },
   ];
   return (
-    <div className="bg-gradient-to-br from-indigo-50 to-yellow-50 min-h-screen">
+    <div className="bg-gradient-to-br from-indigo-50 to-yellow-50 dark:from-indigo-900 dark:to-yellow-900 min-h-screen">
       <MoodBased />
       <PersonalizedPicks userBooks={userBooks} />
     </div>

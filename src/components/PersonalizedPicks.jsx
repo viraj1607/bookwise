@@ -28,38 +28,42 @@ const PersonalizedPicks = ({ userBooks }) => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
-      <h2 className="text-3xl font-bold text-center text-indigo-600 mb-6">
+      <h2 className="text-3xl font-bold text-center text-indigo-600 dark:text-indigo-400 mb-6">
         Personalized Picks
       </h2>
 
       <div className="text-center mb-6">
         <button
           onClick={handleGenerate}
-          className="px-6 py-2 bg-yellow-400 hover:bg-yellow-500 text-white font-semibold rounded-full transition cursor-pointer"
+          className="px-6 py-2 bg-yellow-400 hover:bg-yellow-500 text-white font-semibold rounded-full transition cursor-pointer dark:text-gray-900"
         >
           Generate Recommendations
         </button>
       </div>
 
       {loading && (
-        <p className="text-center text-gray-600">Generating picks...</p>
+        <p className="text-center text-gray-600 dark:text-gray-300">
+          Generating picks...
+        </p>
       )}
-      {error && <p className="text-center text-red-500">{error}</p>}
+      {error && (
+        <p className="text-center text-red-500 dark:text-red-400">{error}</p>
+      )}
 
       {picks.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {picks.map((book, idx) => (
             <div
               key={idx}
-              className="p-5 border rounded-2xl shadow-sm bg-white hover:shadow-md transition"
+              className="p-5 border rounded-2xl shadow-sm bg-white hover:shadow-md transition dark:bg-gray-800 dark:border-gray-700"
             >
-              <h4 className="text-lg font-bold text-indigo-600">
+              <h4 className="text-lg font-bold text-indigo-600 dark:text-indigo-400">
                 {book.title}
               </h4>
-              <p className="text-sm text-gray-700 italic mb-1">
+              <p className="text-sm text-gray-700 dark:text-gray-300 italic mb-1">
                 by {book.author}
               </p>
-              <p className="text-gray-600">{book.reason}</p>
+              <p className="text-gray-600 dark:text-gray-400">{book.reason}</p>
             </div>
           ))}
         </div>

@@ -47,24 +47,29 @@ const Community = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-yellow-50 py-10 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-yellow-50 dark:from-indigo-900 dark:to-yellow-900 py-10 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-10">
-          <h1 className="text-4xl font-extrabold text-indigo-600">
+          <h1 className="text-4xl font-extrabold text-indigo-600 dark:text-yellow-400">
             📚 Book Community
           </h1>
-          <p className="text-gray-600 mt-2">
+          <p className="text-gray-600 dark:text-gray-300 mt-2">
             Share your thoughts and connect with fellow readers
           </p>
         </div>
 
-        <div className="mb-6 bg-white rounded-2xl shadow-xl p-6">
+        <div className="mb-6 bg-white rounded-2xl shadow-xl p-6 dark:bg-gray-800 dark:shadow-xl">
           <AddPost onPost={handleNewPost} />
         </div>
 
         <div className="space-y-6">
           {posts.map((post) => (
-            <PostFeed key={post._id} post={post} user={user} fetch={fetchPosts}/>
+            <PostFeed
+              key={post._id}
+              post={post}
+              user={user}
+              fetch={fetchPosts}
+            />
           ))}
         </div>
       </div>

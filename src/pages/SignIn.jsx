@@ -34,9 +34,9 @@ function SignIn() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-yellow-50 to-indigo-100 px-4">
-      <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
-        <h2 className="text-3xl font-bold text-center text-indigo-600 mb-6">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-yellow-50 to-indigo-100 dark:from-indigo-900 dark:to-yellow-900 px-4">
+      <div className="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-lg w-full max-w-md">
+        <h2 className="text-3xl font-bold text-center text-indigo-600 dark:text-yellow-400 mb-6">
           Welcome Back
         </h2>
 
@@ -47,7 +47,7 @@ function SignIn() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
           <input
             type="password"
@@ -55,7 +55,7 @@ function SignIn() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
 
           {errorMsg && (
@@ -70,9 +70,12 @@ function SignIn() {
           </button>
         </form>
 
-        <p className="mt-4 text-sm text-center text-gray-600">
+        <p className="mt-4 text-sm text-center text-gray-600 dark:text-gray-300">
           Don’t have an account?{" "}
-          <a href="/signup" className="text-indigo-600 hover:underline">
+          <a
+            href="/signup"
+            className="text-indigo-600 dark:text-yellow-400 hover:underline"
+          >
             Sign Up
           </a>
         </p>

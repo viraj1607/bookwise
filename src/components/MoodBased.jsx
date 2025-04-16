@@ -29,7 +29,7 @@ const MoodBased = () => {
       const aiResponse = await geminiAI(prompt);
       const cleanJSON = aiResponse.replace(/```json|```/g, "").trim();
       const parsedJSON = JSON.parse(cleanJSON);
-      console.log(parsedJSON)
+      console.log(parsedJSON);
       setRecommendations(parsedJSON);
     } catch (err) {
       console.error(err);
@@ -46,7 +46,7 @@ const MoodBased = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-10">
-      <h2 className="text-3xl font-bold text-center text-indigo-600 mb-8">
+      <h2 className="text-3xl font-bold text-center text-indigo-600 dark:text-yellow-400 mb-8">
         Mood-Based Recommendations
       </h2>
 
@@ -55,25 +55,34 @@ const MoodBased = () => {
           <button
             key={mood}
             onClick={() => handleMoodClick(mood)}
-            className={`px-4 py-2 rounded-full border cursor-pointer ${
+            className={`px-4 py-2 rounded-full border cursor-pointer transition ${
               selectedMood === mood
-                ? "bg-indigo-600 text-white"
-                : "bg-white text-indigo-600 border-indigo-600"
-            } hover:bg-indigo-700 hover:text-white transition`}
+                ? "bg-indigo-600 text-white hover:bg-indigo-700"
+                : "bg-white text-indigo-600 border-indigo-600 hover:bg-indigo-600 hover:text-white dark:bg-gray-800 dark:text-indigo-400 dark:border-indigo-400 dark:hover:bg-indigo-500 dark:hover:text-white"
+            }`}
           >
             {mood}
           </button>
         ))}
       </div>
 
-      {loading && <p className="text-center text-gray-600">Loading...</p>}
-      {error && <p className="text-center text-red-500">{error}</p>}
+      {loading && (
+        <p className="text-center text-gray-600 dark:text-gray-300">
+          Loading...
+        </p>
+      )}
+      {error && (
+        <p className="text-center text-red-500 dark:text-red-400">{error}</p>
+      )}
 
       {recommendations.length > 0 && (
         <div className="space-y-6">
-          <h3 className="text-xl font-semibold text-gray-800">
+          <h3 className="text-xl font-semibold text-gray-800 dark:text-white">
             Books for feeling{" "}
-            <span className="text-indigo-600">{selectedMood}</span>:
+            <span className="text-indigo-600 dark:text-yellow-400">
+              {selectedMood}
+            </span>
+            :
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {recommendations.map((book, index) => (

@@ -51,28 +51,30 @@ const PostFeed = ({ post, user, fetch }) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-md p-6 mb-6 max-w-2xl w-full mx-auto transition hover:shadow-lg">
+    <div className="bg-white rounded-2xl shadow-md p-6 mb-6 max-w-2xl w-full mx-auto transition hover:shadow-lg dark:bg-gray-800 dark:shadow-xl">
       {/* User Info */}
       <div className="flex items-center gap-3 mb-4">
-        <FaUserCircle className="text-3xl text-indigo-500" />
+        <FaUserCircle className="text-3xl text-indigo-500 dark:text-indigo-400" />
         <div>
-          <p className="text-sm font-semibold text-gray-800">{post.user}</p>
-          <p className="text-xs text-gray-500">
+          <p className="text-sm font-semibold text-gray-800 dark:text-gray-300">
+            {post.user}
+          </p>
+          <p className="text-xs text-gray-500 dark:text-gray-400">
             {new Date(post.createdAt).toLocaleString()}
           </p>
         </div>
       </div>
 
       {/* Post Content */}
-      <p className="text-gray-800 text-base leading-relaxed mb-4">
+      <p className="text-gray-800 text-base leading-relaxed mb-4 dark:text-gray-300">
         {post.content}
       </p>
 
       {/* Actions */}
-      <div className="flex items-center gap-6 text-gray-600">
+      <div className="flex items-center gap-6 text-gray-600 dark:text-gray-400">
         <button
           className={`flex items-center gap-2 hover:text-red-500 transition ${
-            isLiked ? "text-red-500" : "text-gray-600"
+            isLiked ? "text-red-500" : "text-gray-600 dark:text-gray-400"
           }`}
           onClick={handleLike}
         >
@@ -80,7 +82,7 @@ const PostFeed = ({ post, user, fetch }) => {
           <span>{post.likes.length}</span>
         </button>
         <button
-          className="flex items-center gap-2 hover:text-indigo-600 transition"
+          className="flex items-center gap-2 hover:text-indigo-600 transition dark:hover:text-indigo-400"
           onClick={toggleComments}
         >
           <FaRegCommentDots className="text-lg" />
@@ -90,11 +92,11 @@ const PostFeed = ({ post, user, fetch }) => {
 
       {/* Comments + Comment Input */}
       {showComments && (
-        <div className="mt-4 border-t pt-4 space-y-3">
+        <div className="mt-4 border-t pt-4 space-y-3 dark:border-gray-600">
           {comments.map((comment, index) => (
             <div
               key={index}
-              className="text-sm text-gray-700 border-l-4 border-indigo-200 pl-3"
+              className="text-sm text-gray-700 border-l-4 border-indigo-200 pl-3 dark:text-gray-300 dark:border-indigo-600"
             >
               <span className="font-semibold">{comment.user}: </span>
               {comment.comment}
@@ -110,11 +112,11 @@ const PostFeed = ({ post, user, fetch }) => {
               placeholder="Write a comment..."
               value={commentInput}
               onChange={(e) => setCommentInput(e.target.value)}
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm"
+              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 text-sm dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600"
             />
             <button
               type="submit"
-              className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition text-sm"
+              className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition text-sm dark:bg-indigo-500 dark:hover:bg-indigo-600"
             >
               Post
             </button>
