@@ -34,7 +34,7 @@ function SignIn() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-yellow-50 to-indigo-100 dark:from-indigo-900 dark:to-yellow-900 px-4">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-indigo-100 to-yellow-100 dark:from-indigo-900 dark:to-yellow-900 px-4">
       <div className="bg-white dark:bg-gray-900 p-8 rounded-2xl shadow-lg w-full max-w-md">
         <h2 className="text-3xl font-bold text-center text-indigo-600 dark:text-yellow-400 mb-6">
           Welcome Back

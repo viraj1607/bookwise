@@ -47,7 +47,7 @@ const Community = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-yellow-50 dark:from-indigo-900 dark:to-yellow-900 py-10 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 to-yellow-100 dark:from-indigo-900 dark:to-yellow-900 py-10 px-4">
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-10">
           <h1 className="text-4xl font-extrabold text-indigo-600 dark:text-yellow-400">

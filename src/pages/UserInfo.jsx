@@ -56,7 +56,7 @@ const UserInfo = () => {
   // }, [user]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-yellow-50 dark:from-gray-900 dark:to-gray-800 py-12 px-6">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 to-yellow-100 dark:from-gray-900 dark:to-gray-800 py-12 px-6">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
         {/* Left - User Info Form */}
         <div className="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-lg col-span-1">

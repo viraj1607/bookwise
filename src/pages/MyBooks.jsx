@@ -85,7 +85,7 @@ function MyBooks() {
   }, []);
 
   return (
-    <div className="py-8 bg-gradient-to-br from-indigo-50 to-yellow-50 dark:from-indigo-900 dark:to-yellow-900 min-h-screen">
+    <div className="py-8 bg-gradient-to-br from-indigo-100 to-yellow-100 dark:from-indigo-900 dark:to-yellow-900 min-h-screen">
       <h1 className="text-center text-2xl font-bold text-indigo-600 dark:text-yellow-400 mb-4">
         My Books
       </h1>
