@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { FaHeart, FaRegCommentDots, FaUserCircle } from "react-icons/fa";
+import axiosInstance from "../utils/axios";
 
-const PostFeed = ({ post }) => {
+const PostFeed = ({ post, user }) => {
   const [showComments, setShowComments] = useState(false);
   const [commentInput, setCommentInput] = useState("");
   const [comments, setComments] = useState(post.comments || []);
@@ -10,17 +11,25 @@ const PostFeed = ({ post }) => {
     setShowComments((prev) => !prev);
   };
 
-  const handleAddComment = (e) => {
+  const handleAddComment = async (e) => {
     e.preventDefault();
     if (!commentInput.trim()) return;
 
-    const newComment = {
-      user: "You", // Replace with actual user name from auth
-      text: commentInput,
-    };
+    try {
+      const res = await axiosInstance.post(
+        `/community/posts/${post._id}/comments`,
+        {
+          user: user ? user.displayName : "Book Worm",
+          text: commentInput,
+        }
+      );
 
-    setComments([...comments, newComment]);
-    setCommentInput("");
+      setComments(res.data); // assuming API returns updated comments
+      setCommentInput("");
+    } catch (err) {
+      console.error("Error adding comment:", err);
+      // optionally show an error toast or message
+    }
   };
 
   return (
@@ -37,7 +46,9 @@ const PostFeed = ({ post }) => {
       </div>
 
       {/* Post Content */}
-      <p className="text-gray-800 text-base leading-relaxed mb-4">{post.content}</p>
+      <p className="text-gray-800 text-base leading-relaxed mb-4">
+        {post.content}
+      </p>
 
       {/* Actions */}
       <div className="flex items-center gap-6 text-gray-600">
@@ -63,11 +74,14 @@ const PostFeed = ({ post }) => {
               className="text-sm text-gray-700 border-l-4 border-indigo-200 pl-3"
             >
               <span className="font-semibold">{comment.user}: </span>
-              {comment.text}
+              {comment.comment}
             </div>
           ))}
 
-          <form onSubmit={handleAddComment} className="flex gap-2 items-center mt-2">
+          <form
+            onSubmit={handleAddComment}
+            className="flex gap-2 items-center mt-2"
+          >
             <input
               type="text"
               placeholder="Write a comment..."
