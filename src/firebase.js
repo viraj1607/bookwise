@@ -3,7 +3,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: import.meta.env.FIREBASE_API_KEY,
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "bookwise-1f197.firebaseapp.com",
   projectId: "bookwise-1f197",
   storageBucket: "bookwise-1f197.firebasestorage.app",
