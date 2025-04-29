@@ -28,7 +28,7 @@ function SignUp() {
       const uid = userCredential.user.uid;
       localStorage.setItem("uid", uid);
       await axiosInstance.post("/user/register", { uid });
-      console.log("User signed up successfully:", user);
+      // console.log("User signed up successfully:", user);
       setFullName("");
       setEmail("");
       setPassword("");

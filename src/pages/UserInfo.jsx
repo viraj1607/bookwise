@@ -37,7 +37,7 @@ const UserInfo = () => {
       const res = await axiosInstance.get(
         `/user-posts/posts/${localStorage.getItem("uid")}`
       );
-      console.log(res.data);
+      // console.log(res.data);
       setUserPosts(res.data);
     } catch (err) {
       console.error("Error fetching user posts:", err);

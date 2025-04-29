@@ -29,7 +29,7 @@ const MoodBased = () => {
       const aiResponse = await geminiAI(prompt);
       const cleanJSON = aiResponse.replace(/```json|```/g, "").trim();
       const parsedJSON = JSON.parse(cleanJSON);
-      console.log(parsedJSON);
+      // console.log(parsedJSON);
       setRecommendations(parsedJSON);
     } catch (err) {
       console.error(err);

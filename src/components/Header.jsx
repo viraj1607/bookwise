@@ -46,7 +46,7 @@ const Header = () => {
     const auth = getAuth();
     try {
       await signOut(auth);
-      console.log("User signed out successfully");
+      // console.log("User signed out successfully");
       navigate("/");
       localStorage.removeItem("uid");
     } catch (error) {

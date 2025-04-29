@@ -43,7 +43,7 @@ const PostFeed = ({ post, user, fetch }) => {
       );
 
       // setLikes(res.data);
-      console.log("likes", res.data);
+      // console.log("likes", res.data);
       fetch();
     } catch (err) {
       console.error("Failed to like post", err);

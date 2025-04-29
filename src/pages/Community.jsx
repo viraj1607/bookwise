@@ -18,7 +18,7 @@ const Community = () => {
   const fetchPosts = async () => {
     const res = await axiosInstance.get("/community/posts");
     setPosts(res.data);
-    console.log("posts", res.data);
+    // console.log("posts", res.data);
   };
 
   const handleNewPost = async (thought) => {
@@ -30,14 +30,14 @@ const Community = () => {
       };
       const res = await axiosInstance.post("/community/posts", newPost);
 
-      console.log(res);
+      // console.log(res);
       fetchPosts();
       const userRes = await axiosInstance.post("/user-posts/add-post", {
         uid: localStorage.getItem("uid"),
         content: thought,
       });
 
-      console.log("✅ Post added:", userRes.data);
+      // console.log("✅ Post added:", userRes.data);
       // return res.data;
     } catch (error) {
       console.error("❌ Error adding post to user:", error);
