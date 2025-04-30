@@ -76,7 +76,7 @@ const UserInfo = () => {
                 <input
                   type="text"
                   name="fullName"
-                  value={user.displayName}
+                  value={user?.displayName}
                   onChange={handleChange}
                   className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
                   placeholder="Enter your full name"
@@ -96,7 +96,7 @@ const UserInfo = () => {
                 <input
                   type="email"
                   name="email"
-                  value={user.email}
+                  value={user?.email}
                   onChange={handleChange}
                   className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
                   placeholder="Enter your email"
@@ -116,7 +116,7 @@ const UserInfo = () => {
                 <input
                   type="text"
                   name="location"
-                  value={userData.location}
+                  value={userData?.location}
                   onChange={handleChange}
                   className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
                   placeholder="Enter your location"
@@ -136,7 +136,7 @@ const UserInfo = () => {
                 <input
                   type="text"
                   name="phone"
-                  value={userData.phone}
+                  value={userData?.phone}
                   onChange={handleChange}
                   className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
                   placeholder="Enter your phone"
