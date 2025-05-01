@@ -12,7 +12,7 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
-  const {setUser}=useBookContext()
+  const { setUser } = useBookContext();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -29,20 +29,20 @@ function SignUp() {
       const user = userCredential.user;
 
       // Set display name (full name)
-      
+
       await updateProfile(user, { displayName: fullName });
 
       const uid = user.uid;
       localStorage.setItem("uid", uid);
       await axiosInstance.post("/user/register", { uid });
-      setUser(fullName)
+      setUser(fullName);
       setFullName("");
       setEmail("");
       setPassword("");
-      navigate("/");
     } catch (error) {
       setErrorMsg(error.message);
     } finally {
+      navigate("/");
       setLoading(false);
     }
   };
