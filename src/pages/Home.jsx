@@ -21,7 +21,7 @@ function Home() {
         reads lives only one.” — George R.R. Martin
       </motion.p>
 
-      {!localStorage.getItem("uid") && (
+      {!localStorage.getItem("uid") ? (
         <div className="flex gap-4 flex-col sm:flex-row">
           <button
             onClick={() => navigate("/signin")}
@@ -36,6 +36,13 @@ function Home() {
             Sign Up
           </button>
         </div>
+      ):(
+        <button
+            onClick={() => navigate("/my-books")}
+            className="bg-indigo-600 text-white px-6 py-2 rounded-2xl shadow-md hover:bg-indigo-700 transition duration-300 cursor-pointer"
+          >
+            Get Started
+          </button>
       )}
 
       <p className="mt-10 text-gray-500 dark:text-gray-400 text-sm">

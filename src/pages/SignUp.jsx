@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
 import axiosInstance from "../utils/axios";
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
+  const navigate=useNavigate()
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,6 +34,7 @@ function SignUp() {
       setFullName("");
       setEmail("");
       setPassword("");
+      navigate("/")
       // Optionally redirect or reset form
     } catch (error) {
       setErrorMsg(error.message);
