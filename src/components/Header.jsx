@@ -114,17 +114,29 @@ const Header = () => {
 
       {/* Mobile Menu */}
       <div className="md:hidden">
-        <MobileMenu user={user} />
+        <MobileMenu
+          user={user}
+          handleLogout={handleLogout}
+          toggleTheme={toggleTheme}
+          isDark={isDark}
+        />
       </div>
     </header>
   );
 };
 
-const MobileMenu = ({ user }) => {
+const MobileMenu = ({ user, handleLogout, toggleTheme, isDark }) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
   return (
-    <div>
+    <div className="flex items-center gap-4 relative">
+      <button
+        onClick={toggleTheme}
+        className="mr-8 text-xl hover:text-indigo-600 dark:hover:text-yellow-400 transition"
+        title="Toggle Theme"
+      >
+        {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+      </button>
       <button onClick={() => setIsOpen(!isOpen)} className="focus:outline-none">
         <svg
           className="w-6 h-6 text-gray-800 dark:text-white"
@@ -151,9 +163,15 @@ const MobileMenu = ({ user }) => {
       </button>
 
       {isOpen && (
-        <div className="absolute right-6 mt-2 bg-white dark:bg-gray-900 border dark:border-gray-700 rounded shadow-md py-2 px-4 space-y-2 z-50">
+        <div className="absolute right-6 top-[12px] bg-white dark:bg-gray-900 border dark:border-gray-700 rounded shadow-md py-2 px-4 space-y-2 z-50">
           {user && (
             <>
+              <Link
+                to="/community"
+                className="block hover:text-indigo-600 dark:hover:text-yellow-400 transition"
+              >
+                Community
+              </Link>
               <Link
                 to="/my-books"
                 className="block text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-yellow-400"
@@ -166,6 +184,18 @@ const MobileMenu = ({ user }) => {
               >
                 Recommendation
               </Link>
+              <Link
+                to="/user-info"
+                className="block text-gray-700 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-yellow-400"
+              >
+                User
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="hover:text-indigo-600 dark:hover:text-yellow-400 transition cursor-pointer"
+              >
+                Sign Out
+              </button>
             </>
           )}
         </div>

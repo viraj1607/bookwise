@@ -37,7 +37,7 @@ const UserInfo = () => {
       const res = await axiosInstance.get(
         `/user-posts/posts/${localStorage.getItem("uid")}`
       );
-      // console.log(res.data);
+      console.log(res.data);
       setUserPosts(res.data);
     } catch (err) {
       console.error("Error fetching user posts:", err);
@@ -45,7 +45,7 @@ const UserInfo = () => {
   };
 
   useEffect(() => {
-    // fetchUserPosts();
+    fetchUserPosts();
   }, []);
 
   // useEffect(() => {
@@ -59,7 +59,7 @@ const UserInfo = () => {
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 to-yellow-100 dark:from-gray-900 dark:to-gray-800 py-12 px-6">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
         {/* Left - User Info Form */}
-        <div className="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-lg col-span-1">
+        <div className="bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-lg col-span-1 max-w-md w-full">
           <h2 className="text-2xl font-bold text-indigo-600 dark:text-yellow-400 mb-6 flex items-center gap-2">
             <UserRound className="w-6 h-6" /> Your Profile
           </h2>
