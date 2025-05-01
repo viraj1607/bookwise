@@ -13,24 +13,24 @@ function MyBooks() {
   const [rating, setRating] = useState("");
   const [bookList, setBookList] = useState([]);
   const [loadingAdd, setLoadingAdd] = useState(false);
-  const { setBookTitles } = useBookContext()
+  const { setBookTitles } = useBookContext();
   const handleAddBook = async (bookName) => {
     setLoadingAdd(true);
     // console.log("Book to add:", bookName);
     const prompt = `Given the name of a book, return the following information in JSON format:
-        - title: Full title of the book
-        - author: Name of the author
-        - genre: "genre1, genre2, genre3"
-        - summary: A short and clear summary of the book
-        - rating: A number between 1 and 5 indicating the average reader rating (can be a float)
-        
-        
-        Book Name: ${bookName}`;
+    - title: Full title of the book
+    - author: Name of the author
+    - genre: "genre1, genre2, genre3"
+    - summary: A brief but detailed summary that helps someone recall the key storyline, themes, and characters
+    - rating: A number between 1 and 5 indicating the average reader rating (can be a float)
+
+    
+    Book Name: ${bookName}`;
 
     const AIresponse = await geminiAI(prompt);
     const cleanJSON = AIresponse.replace(/```json|```/g, "").trim();
     const parsedJSON = JSON.parse(cleanJSON);
-    // console.log("AIresponse", parsedJSON);
+    console.log("AIresponse", parsedJSON);
 
     addBooktoList(localStorage.getItem("uid"), parsedJSON);
   };
@@ -43,7 +43,7 @@ function MyBooks() {
         newBook,
       });
       // console.log(response.data);
-      setLoadingAdd(false)
+      setLoadingAdd(false);
       setBookList(response.data.bookList);
       // return response.data;
     } catch (error) {
@@ -59,7 +59,7 @@ function MyBooks() {
       const res = await axiosInstance.get(`/user/${uid}`);
       // console.log("Books:", res.data);
       setBookList(res.data);
-      const titles=res.data.map(book => book.title)
+      const titles = res.data.map((book) => book.title);
       setBookTitles(titles);
     } catch (error) {
       console.error("Failed to fetch books", error);
@@ -96,7 +96,7 @@ function MyBooks() {
       <h1 className="text-center text-2xl font-bold text-indigo-600 dark:text-yellow-400 mb-4">
         My Books
       </h1>
-      <AddBook onAdd={handleAddBook} loading={loadingAdd}/>
+      <AddBook onAdd={handleAddBook} loading={loadingAdd} />
       <BookFilters
         authors={uniqueAuthors}
         genres={uniqueGenres}
@@ -109,7 +109,7 @@ function MyBooks() {
         resetFilters={handleResetFilters}
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:py-2">
-        {filteredBooks.map((book, index) => (
+        {[...filteredBooks].reverse().map((book, index) => (
           <BookCard key={index} {...book} />
         ))}
       </div>
