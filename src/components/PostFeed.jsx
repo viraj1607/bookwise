@@ -20,7 +20,7 @@ const PostFeed = ({ post, user, fetch }) => {
       const res = await axiosInstance.post(
         `/community/posts/${post._id}/comments`,
         {
-          user: user ? user.displayName : "Book Worm",
+          user: user ? user : "Book Worm",
           text: commentInput,
         }
       );
@@ -93,15 +93,23 @@ const PostFeed = ({ post, user, fetch }) => {
       {/* Comments + Comment Input */}
       {showComments && (
         <div className="mt-4 border-t pt-4 space-y-3 dark:border-gray-600">
-          {comments.map((comment, index) => (
-            <div
-              key={index}
-              className="text-sm text-gray-700 border-l-4 border-indigo-200 pl-3 dark:text-gray-300 dark:border-indigo-600"
-            >
-              <span className="font-semibold">{comment.user}: </span>
-              {comment.comment}
-            </div>
-          ))}
+          {comments.map((comment, index) => {
+            const isCurrentUser =
+              comment.user === (user?.user || "Book Worm");
+            return (
+              <div
+                key={index}
+                className={`text-sm pl-3 py-1 rounded-md ${
+                  isCurrentUser
+                    ? "bg-indigo-100 text-indigo-900 border-l-4 border-indigo-400 dark:bg-indigo-900 dark:text-indigo-100 dark:border-indigo-500"
+                    : "text-gray-700 border-l-4 border-indigo-200 dark:text-gray-300 dark:border-indigo-600"
+                }`}
+              >
+                <span className="font-semibold">{comment.user}: </span>
+                {comment.comment}
+              </div>
+            );
+          })}
 
           <form
             onSubmit={handleAddComment}

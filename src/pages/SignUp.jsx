@@ -3,6 +3,7 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../firebase";
 import axiosInstance from "../utils/axios";
 import { useNavigate } from "react-router-dom";
+import { useBookContext } from "../bookContext";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ function SignUp() {
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
+  const {setUser}=useBookContext()
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -27,12 +29,13 @@ function SignUp() {
       const user = userCredential.user;
 
       // Set display name (full name)
+      
       await updateProfile(user, { displayName: fullName });
 
       const uid = user.uid;
       localStorage.setItem("uid", uid);
       await axiosInstance.post("/user/register", { uid });
-
+      setUser(fullName)
       setFullName("");
       setEmail("");
       setPassword("");

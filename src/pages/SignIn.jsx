@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useBookContext } from "../bookContext";
 
 function SignIn() {
   const [email, setEmail] = useState("");
@@ -8,6 +9,7 @@ function SignIn() {
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const {setUser}=useBookContext()
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -22,6 +24,8 @@ function SignIn() {
         email,
         password
       );
+      // console.log(userCredential.user)
+      setUser(userCredential.user.displayName)
       const uid = userCredential.user.uid;
       localStorage.setItem("uid", uid);
       setEmail("");

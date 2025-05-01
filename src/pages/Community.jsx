@@ -5,11 +5,13 @@ import AddPost from "../components/AddPost";
 import PostFeed from "../components/PostFeed";
 import { dummyCommunityPosts } from "../data/feed";
 import axiosInstance from "../utils/axios";
+import { useBookContext } from "../bookContext";
 
 const Community = () => {
   const [posts, setPosts] = useState(dummyCommunityPosts);
   const auth = getAuth();
-  const user = auth.currentUser;
+  // const user = auth.currentUser;
+  const { user } = useBookContext();
 
   useEffect(() => {
     fetchPosts();
@@ -26,7 +28,7 @@ const Community = () => {
       const newPost = {
         uid: localStorage.getItem("uid"),
         content: thought,
-        user: user ? user.displayName || user.email : "Book Worm",
+        user: user ? user : "Book Worm",
       };
       const res = await axiosInstance.post("/community/posts", newPost);
 

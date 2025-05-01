@@ -1,23 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
-import { Loader2, Pencil, MapPin, Phone, Mail, UserRound } from "lucide-react";
+import { updateProfile, updateEmail, updatePassword } from "firebase/auth";
+import { Loader2, Pencil, MapPin, Mail, UserRound } from "lucide-react";
 import axiosInstance from "../utils/axios";
 import PostFeed from "../components/PostFeed";
 import { dummyCommunityPosts } from "../data/feed";
 
 const UserInfo = () => {
+  const auth = getAuth();
+  const user = auth.currentUser;
   const [userData, setUserData] = useState({
-    fullName: "",
-    email: "",
-    location: "",
-    phone: "",
+    fullName: user?.displayName || "",
+    email: user?.email || "",
+    password: "",
   });
   const [userPosts, setUserPosts] = useState(dummyCommunityPosts);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
-  const auth = getAuth();
-  const user = auth.currentUser;
 
   const handleChange = (e) => {
     setUserData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -26,10 +25,30 @@ const UserInfo = () => {
   const handleUpdate = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      setMessage("Profile updated successfully!");
-      setLoading(false);
-    }, 1000);
+    setMessage("");
+
+    try {
+      if (user) {
+        if (userData.fullName !== user.displayName) {
+          await updateProfile(user, { displayName: userData.fullName });
+        }
+
+        if (userData.email !== user.email) {
+          await updateEmail(user, userData.email);
+        }
+
+        if (userData.password) {
+          await updatePassword(user, userData.password);
+        }
+
+        setMessage("Profile updated successfully!");
+      }
+    } catch (error) {
+      console.error("Update error:", error);
+      setMessage("Failed to update profile. Please re-authenticate.");
+    }
+
+    setLoading(false);
   };
 
   const fetchUserPosts = async () => {
@@ -76,7 +95,7 @@ const UserInfo = () => {
                 <input
                   type="text"
                   name="fullName"
-                  value={user?.displayName}
+                  value={userData.fullName}
                   onChange={handleChange}
                   className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
                   placeholder="Enter your full name"
@@ -96,7 +115,7 @@ const UserInfo = () => {
                 <input
                   type="email"
                   name="email"
-                  value={user?.email}
+                  value={userData.email}
                   onChange={handleChange}
                   className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
                   placeholder="Enter your email"
@@ -104,42 +123,22 @@ const UserInfo = () => {
               </div>
             </div>
 
-            {/* Location */}
+            {/* Password */}
             <div>
               <label className="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">
-                Location
+                Password
               </label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">
                   <MapPin />
                 </span>
                 <input
-                  type="text"
-                  name="location"
-                  value={userData?.location}
+                  type="password"
+                  name="password"
+                  value={userData.password}
                   onChange={handleChange}
                   className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
-                  placeholder="Enter your location"
-                />
-              </div>
-            </div>
-
-            {/* Phone */}
-            <div>
-              <label className="block text-sm font-medium text-gray-600 dark:text-gray-300 mb-1">
-                Phone
-              </label>
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">
-                  <Phone />
-                </span>
-                <input
-                  type="text"
-                  name="phone"
-                  value={userData?.phone}
-                  onChange={handleChange}
-                  className="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500 outline-none"
-                  placeholder="Enter your phone"
+                  placeholder="Enter new password"
                 />
               </div>
             </div>
