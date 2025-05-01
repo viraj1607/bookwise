@@ -39,10 +39,11 @@ function SignUp() {
       setFullName("");
       setEmail("");
       setPassword("");
+      navigate("/");
     } catch (error) {
       setErrorMsg(error.message);
     } finally {
-      navigate("/");
+      
       setLoading(false);
     }
   };
