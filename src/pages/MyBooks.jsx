@@ -5,12 +5,14 @@ import geminiAI from "../../services/GeminiAPI";
 import BookFilters from "../components/BookFilters";
 import booksData from "../data/dummy";
 import axiosInstance from "../utils/axios";
+import { useBookContext } from "../bookContext";
 
 function MyBooks() {
   const [author, setAuthor] = useState("");
   const [genre, setGenre] = useState("");
   const [rating, setRating] = useState("");
   const [bookList, setBookList] = useState([]);
+  const { setBookTitles } = useBookContext()
   const handleAddBook = async (bookName) => {
     // console.log("Book to add:", bookName);
     const prompt = `Given the name of a book, return the following information in JSON format:
@@ -54,6 +56,8 @@ function MyBooks() {
       const res = await axiosInstance.get(`/user/${uid}`);
       // console.log("Books:", res.data);
       setBookList(res.data);
+      const titles=res.data.map(book => book.title)
+      setBookTitles(titles);
     } catch (error) {
       console.error("Failed to fetch books", error);
     }

@@ -12,11 +12,14 @@ const PersonalizedPicks = ({ userBooks }) => {
     setPicks([]);
 
     try {
-      const booksList = userBooks.map((book) => book.title).join(", ");
+      console.log(userBooks)
+      const booksList = userBooks.map((book) => book).join(", ");
       const prompt = `Based on the books I've read: ${booksList}, recommend 3 personalized book picks. For each, include the title, author, and why it's a good match. Format response as JSON like this: [{"title": "Book Title", "author": "Author Name", "reason": "Why it's a good match"}]`;
 
       const response = await geminiAI(prompt);
-      const recommendations = JSON.parse(response);
+      // console.log(response)
+      const cleanJSON = response.replace(/```json|```/g, "").trim();
+      const recommendations = JSON.parse(cleanJSON);
       setPicks(recommendations);
     } catch (err) {
       console.error(err);
