@@ -5,15 +5,17 @@ import axiosInstance from "../utils/axios";
 import { useNavigate } from "react-router-dom";
 
 function SignUp() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     setErrorMsg("");
+    setLoading(true);
 
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -21,23 +23,24 @@ function SignUp() {
         email,
         password
       );
+
       const user = userCredential.user;
 
       // Set display name (full name)
-      await updateProfile(user, {
-        displayName: fullName,
-      });
-      const uid = userCredential.user.uid;
+      await updateProfile(user, { displayName: fullName });
+
+      const uid = user.uid;
       localStorage.setItem("uid", uid);
       await axiosInstance.post("/user/register", { uid });
-      // console.log("User signed up successfully:", user);
+
       setFullName("");
       setEmail("");
       setPassword("");
-      navigate("/")
-      // Optionally redirect or reset form
+      navigate("/");
     } catch (error) {
       setErrorMsg(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -80,9 +83,37 @@ function SignUp() {
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-2 rounded-xl hover:bg-indigo-700 transition cursor-pointer"
+            disabled={loading}
+            className={`w-full py-2 rounded-xl transition cursor-pointer flex items-center justify-center ${
+              loading
+                ? "bg-indigo-400 cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-indigo-700"
+            } text-white`}
           >
-            Sign Up
+            {loading ? (
+              <svg
+                className="animate-spin h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                ></path>
+              </svg>
+            ) : (
+              "Sign Up"
+            )}
           </button>
         </form>
 

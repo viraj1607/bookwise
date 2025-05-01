@@ -6,11 +6,13 @@ function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     setErrorMsg("");
+    setLoading(true);
 
     const auth = getAuth();
 
@@ -20,16 +22,15 @@ function SignIn() {
         email,
         password
       );
-      const user = userCredential.user;
       const uid = userCredential.user.uid;
       localStorage.setItem("uid", uid);
-      // console.log("User signed in:", user);
       setEmail("");
       setPassword("");
       navigate("/my-books");
-      // Optional: Redirect user or clear form
     } catch (error) {
       setErrorMsg(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,9 +65,37 @@ function SignIn() {
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-2 rounded-xl hover:bg-indigo-700 transition cursor-pointer"
+            disabled={loading}
+            className={`w-full py-2 rounded-xl transition cursor-pointer flex items-center justify-center ${
+              loading
+                ? "bg-indigo-400 cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-indigo-700"
+            } text-white`}
           >
-            Sign In
+            {loading ? (
+              <svg
+                className="animate-spin h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                ></path>
+              </svg>
+            ) : (
+              "Sign In"
+            )}
           </button>
         </form>
 
