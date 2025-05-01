@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function AddBook({ onAdd }) {
+function AddBook({ onAdd,loading }) {
   const [bookName, setBookName] = useState("");
 
   const handleAdd = () => {
@@ -22,7 +22,7 @@ function AddBook({ onAdd }) {
         onClick={handleAdd}
         className="w-full sm:w-auto bg-indigo-600 text-white px-6 py-2 rounded-xl text-sm hover:bg-indigo-700 transition"
       >
-        Add
+        {loading ? "Adding..." : "Add"}
       </button>
     </div>
   );

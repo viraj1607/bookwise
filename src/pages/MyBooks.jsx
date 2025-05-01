@@ -12,8 +12,10 @@ function MyBooks() {
   const [genre, setGenre] = useState("");
   const [rating, setRating] = useState("");
   const [bookList, setBookList] = useState([]);
+  const [loadingAdd, setLoadingAdd] = useState(false);
   const { setBookTitles } = useBookContext()
   const handleAddBook = async (bookName) => {
+    setLoadingAdd(true);
     // console.log("Book to add:", bookName);
     const prompt = `Given the name of a book, return the following information in JSON format:
         - title: Full title of the book
@@ -41,6 +43,7 @@ function MyBooks() {
         newBook,
       });
       // console.log(response.data);
+      setLoadingAdd(false)
       setBookList(response.data.bookList);
       // return response.data;
     } catch (error) {
@@ -93,7 +96,7 @@ function MyBooks() {
       <h1 className="text-center text-2xl font-bold text-indigo-600 dark:text-yellow-400 mb-4">
         My Books
       </h1>
-      <AddBook onAdd={handleAddBook} />
+      <AddBook onAdd={handleAddBook} loading={loadingAdd}/>
       <BookFilters
         authors={uniqueAuthors}
         genres={uniqueGenres}

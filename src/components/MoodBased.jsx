@@ -67,9 +67,9 @@ const MoodBased = () => {
       </div>
 
       {loading && (
-        <p className="text-center text-gray-600 dark:text-gray-300">
-          Loading...
-        </p>
+        <div className="text-center text-indigo-600 dark:text-yellow-400 font-medium py-4 animate-pulse">
+          Fetching your perfect book match based on your mood...
+        </div>
       )}
       {error && (
         <p className="text-center text-red-500 dark:text-red-400">{error}</p>
